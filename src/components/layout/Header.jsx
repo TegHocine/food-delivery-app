@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { useStateValue } from '../../context/StateProvider'
+
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '../../firebase'
 
@@ -9,14 +11,21 @@ import { motion } from 'framer-motion'
 
 import logo from '../../assets/logo.png'
 import avatar from '../../assets/avatar.png'
+import { actionType } from '../../context/reducer'
 
 const Header = () => {
   const firebaseAuth = getAuth(app)
   const provider = new GoogleAuthProvider()
 
+  const [{ user }, dispatch] = useStateValue()
   const login = async () => {
-    const res = await signInWithPopup(firebaseAuth, provider)
-    console.log(res)
+    const {
+      user: { refreshToken, providerData }
+    } = await signInWithPopup(firebaseAuth, provider)
+    dispatch({
+      type: actionType.SET_USER,
+      user: providerData[0]
+    })
   }
   return (
     <header className='fixed top-0 z-50 py-6 px-16 w-full'>

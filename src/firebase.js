@@ -3,20 +3,19 @@ import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCZJXHtgXnWBJViZx17wydas9XWUhxFUr8',
+  apiKey: import.meta.env.VITE_APIKEY,
 
-  authDomain: 'resto-app-b4a6a.firebaseapp.com',
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
 
-  databaseURL:
-    'https://resto-app-b4a6a-default-rtdb.europe-west1.firebasedatabase.app',
+  databaseURL: import.meta.env.VITE_DATABASEURL,
 
-  projectId: 'resto-app-b4a6a',
+  projectId: import.meta.env.VITE_PROJECTID,
 
-  storageBucket: 'resto-app-b4a6a.appspot.com',
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
 
-  messagingSenderId: '829620356057',
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDERID,
 
-  appId: '1:829620356057:web:e2fe691812dbe80c404fc8'
+  appId: import.meta.env.VITE_APPID
 }
 
 const app = getApp.length > 0 ? getApp() : initializeApp(firebaseConfig)
