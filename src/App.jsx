@@ -8,7 +8,7 @@ import CreateContainer from './components/layout/CreateContainer'
 
 const App = () => {
   return (
-    <AnimatePresence>
+    <AnimatePresence exitBeforeEnter>
       <div className='h-auto flex flex-col bg-primary'>
         <Header />
         <main className='mt-24 p-8 w-full'>
