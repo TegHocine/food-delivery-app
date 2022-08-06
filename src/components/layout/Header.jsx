@@ -34,9 +34,18 @@ const Header = () => {
     }
   }
 
+  const logout = () => {
+    localStorage.removeItem('user')
+    dispatch({
+      type: actionType.SET_USER,
+      user: null
+    })
+  }
+
   const menu = () => {
     setIsMenu(!isMenu)
   }
+
   return (
     <header className='fixed top-0 z-50  p-4 md:py-6 md:px-16 w-full'>
       {/* desktop */}
@@ -92,7 +101,9 @@ const Header = () => {
                     </p>
                   </Link>
                 )}
-                <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all ease-in-out duration-100 text-textColor text-base'>
+                <p
+                  className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all ease-in-out duration-100 text-textColor text-base'
+                  onClick={logout}>
                   Logout <MdLogout />
                 </p>
               </motion.div>
@@ -101,11 +112,54 @@ const Header = () => {
         </div>
       </div>
       {/* Mobile */}
-      <div className='flex md:hidden '>
+      <div className='flex md:hidden items-center justify-between'>
         <Link to='/' className='flex items-center gap-2'>
           <img src={logo} alt='logo' className='w-8 object-cover' />
           <p className='text-headingColor text-xl font-bold'>City</p>
         </Link>
+        {/* User Avatar */}
+        <div className='relative' onClick={user ? menu : login}>
+          <motion.img
+            whileTap={{ scale: 0.6 }}
+            src={user ? user.photoURL : avatar}
+            alt='user profile'
+            className='w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full'
+          />
+          {isMenu && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              className='w-40 bg-gray-50 shadow-xl rounded-lg absolute flex flex-col top-12 right-0'>
+              {user && user.email === 'atlas.social.net@gmail.com' && (
+                <Link to={'/createItem'}>
+                  <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all ease-in-out duration-100 text-textColor text-base'>
+                    New Item <MdAdd />
+                  </p>
+                </Link>
+              )}
+              <ul className='flex flex-col'>
+                <li className='text-base hover:text-headingColor cursor-pointer text-textColor transition-all ease-in-out hover:bg-slate-100 px-4 py-2'>
+                  Home
+                </li>
+                <li className='text-base hover:text-headingColor cursor-pointer text-textColor transition-all ease-in-out hover:bg-slate-100 px-4 py-2'>
+                  Menu
+                </li>
+                <li className='text-base hover:text-headingColor cursor-pointer text-textColor transition-all ease-in-out hover:bg-slate-100 px-4 py-2'>
+                  About Us
+                </li>
+                <li className='text-base hover:text-headingColor cursor-pointer text-textColor transition-all ease-in-out hover:bg-slate-100 px-4 py-2'>
+                  Service
+                </li>
+              </ul>
+              <p
+                className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all ease-in-out duration-100 text-textColor text-base'
+                onClick={logout}>
+                Logout <MdLogout />
+              </p>
+            </motion.div>
+          )}
+        </div>
       </div>
     </header>
   )
