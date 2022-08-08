@@ -113,10 +113,18 @@ const Header = () => {
       </div>
       {/* Mobile */}
       <div className='flex md:hidden items-center justify-between'>
+        {/* // Cart */}
+        <div className='relative flex items-center justify-center'>
+          <MdShoppingCart className='text-textColor text-2xl cursor-pointer' />
+          <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
+            <p className='text-sm text-white font-semibold'>1</p>
+          </div>
+        </div>
         <Link to='/' className='flex items-center gap-2'>
           <img src={logo} alt='logo' className='w-8 object-cover' />
           <p className='text-headingColor text-xl font-bold'>City</p>
         </Link>
+
         {/* User Avatar */}
         <div className='relative' onClick={user ? menu : login}>
           <motion.img
