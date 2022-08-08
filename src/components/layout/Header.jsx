@@ -47,7 +47,7 @@ const Header = () => {
   }
 
   return (
-    <header className='fixed top-0 z-50  p-4 md:py-6 md:px-16 w-full'>
+    <header className='fixed top-0 z-50  p-4 md:py-6 md:px-16 w-full bg-primary'>
       {/* desktop */}
       <div className='hidden md:flex w-full h-full items-center justify-between'>
         <Link to='/' className='flex items-center gap-2'>

@@ -1,6 +1,11 @@
 import React from 'react'
 
+import HeroCard from '../HeroCard'
+
 import Delivery from '../../assets/delivery.png'
+import Herobg from '../../assets/herobg.png'
+
+import { heroData } from '../../utils/data'
 
 const HomeContainer = () => {
   return (
@@ -36,7 +41,25 @@ const HomeContainer = () => {
           Order Now
         </button>
       </div>
-      <div className='py-2 flex-1'></div>
+      <div className='py-2 flex flex-1 items-center  relative'>
+        <img
+          src={Herobg}
+          alt='Hero background'
+          className='ml-auto w-full h-420 md:h-600 md:w-auto'
+        />
+        <div className='h-full w-full absolute  top-0 left-0 gap-2 md:gap-4 lg:gap-8  py-4 flex items-center justify-center flex-wrap  lg:grid lg:place-items-center lg:grid-cols-autoC'>
+          {heroData?.map((item) => (
+            <HeroCard
+              key={item.id}
+              img={item.img}
+              title={item.title}
+              desc={item.desc}
+              price={item.price}
+              currency={item.currency}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

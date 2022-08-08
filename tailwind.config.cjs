@@ -36,7 +36,8 @@ module.exports = {
       minWidth: {
         210: '210px',
         350: '350px',
-        620: '620px'
+        620: '620px',
+        190: '190px'
       },
       screens: {
         sm: '640px',
@@ -56,6 +57,9 @@ module.exports = {
         cartBg: '#282a2c',
         cartItem: '#2e3033',
         cartTotal: '#343739'
+      },
+      gridTemplateColumns: {
+        autoC: 'repeat(2,minmax(190px,190px))'
       }
     }
   },
