@@ -30,6 +30,9 @@ const CreateContainer = () => {
   const deleteImage = () => {
     console.log('delete')
   }
+  const saveDetails = () => {
+    console.log('save')
+  }
 
   return (
     <div className='w-full h-full flex items-center justify-center'>
@@ -49,7 +52,7 @@ const CreateContainer = () => {
         )}
         {/* item title */}
         <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2'>
-          <MdFastfood className='text-xl text-gray-700' />
+          <MdFastfood className='text-2xl text-gray-700' />
           <input
             type='text'
             value={title}
@@ -62,7 +65,7 @@ const CreateContainer = () => {
         <div className='w-full'>
           <select
             onChange={(e) => setCalories(e.target.value)}
-            className='bg-gray-100  outline-none w-full  border-b-2 border-gray-200 p-2 rounded-md cursor-pointer text-headingColor'>
+            className='bg-primary  outline-none w-full  border-b-2 border-gray-300 p-2 rounded-md cursor-pointer text-headingColor'>
             <option
               value='other'
               className='bg-white text-base border-0 outline-none capitalize '>
@@ -122,6 +125,45 @@ const CreateContainer = () => {
               )}
             </>
           )}
+        </div>
+        {/*  */}
+        <div className='w-full flex flex-col md:flex-row items-center gap-3'>
+          <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2'>
+            <MdFoodBank className='text-gray-700 text-2xl' />
+            <input
+              type='text'
+              className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor'
+              placeholder='Calories'
+              value={calories}
+              onChange={(e) => {
+                setCalories(e.target.value)
+              }}
+              required
+            />
+          </div>
+          <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2'>
+            <MdAttachMoney className='text-gray-700 text-2xl' />
+            <input
+              type='text'
+              className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor'
+              placeholder='Price'
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value)
+              }}
+              required
+            />
+          </div>
+        </div>
+
+        {/* save button */}
+        <div className='flex items-center w-full'>
+          <button
+            type='button'
+            className='ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 px-10 py-1 rounded-lg text-lg text-white font-semibold'
+            onClick={saveDetails}>
+            Save
+          </button>
         </div>
       </div>
     </div>
