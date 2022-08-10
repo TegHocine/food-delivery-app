@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 
 import Loader from '../Loader'
 
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable
+} from 'firebase/storage'
+import { storage } from '../../firebase'
 import { motion } from 'framer-motion'
 import {
   MdFastfood,
@@ -12,6 +19,7 @@ import {
 } from 'react-icons/md'
 
 import { categories } from '../../utils/data'
+import { saveItem } from '../../utils/firebaseFunc'
 
 const CreateContainer = () => {
   const [title, setTitle] = useState('')
@@ -24,25 +32,115 @@ const CreateContainer = () => {
   const [msg, setMsg] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  const uploadImage = () => {
-    console.log('upload')
+  const uploadImage = (e) => {
+    setIsLoading(true)
+    const imageFile = e.target.files[0]
+    const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`)
+    const uploadTask = uploadBytesResumable(storageRef, imageFile)
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const uploadProgress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      },
+      (error) => {
+        console.log(error)
+        setFields(true)
+        setMsg('Error while uploading : Try AGain 🙇')
+        setAlertStatus('danger')
+        setTimeout(() => {
+          setFields(false)
+          setIsLoading(false)
+        }, 4000)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageAsset(downloadURL)
+          setIsLoading(false)
+          setFields(true)
+          setMsg('Image uploaded successfully 😊')
+          setAlertStatus('success')
+          setTimeout(() => {
+            setFields(false)
+          }, 4000)
+        })
+      }
+    )
   }
   const deleteImage = () => {
-    console.log('delete')
+    setIsLoading(true)
+    const deleteRef = ref(storage, imageAsset)
+    deleteObject(deleteRef).then(() => {
+      setImageAsset(null)
+      setIsLoading(false)
+      setFields(true)
+      setMsg('Image deleted successfully 😊')
+      setAlertStatus('success')
+      setTimeout(() => {
+        setFields(false)
+      }, 4000)
+    })
   }
   const saveDetails = () => {
-    console.log('save')
+    setIsLoading(true)
+    try {
+      if (!title || !calories || !imageAsset || !price || !category) {
+        setFields(true)
+        setMsg("Required fields can't be empty")
+        setAlertStatus('danger')
+        setTimeout(() => {
+          setFields(false)
+          setIsLoading(false)
+        }, 4000)
+      } else {
+        const data = {
+          id: `${Date.now()}`,
+          title: title,
+          imageURL: imageAsset,
+          category: category,
+          calories: calories,
+          qty: 1,
+          price: price
+        }
+        saveItem(data)
+        setIsLoading(false)
+        setFields(true)
+        setMsg('Data Uploaded successfully 😊')
+        setAlertStatus('success')
+        setTimeout(() => {
+          setFields(false)
+        }, 4000)
+        clearData()
+      }
+    } catch (error) {
+      console.log(error)
+      setFields(true)
+      setMsg('Error while uploading : Try AGain 🙇')
+      setAlertStatus('danger')
+      setTimeout(() => {
+        setFields(false)
+        setIsLoading(false)
+      }, 4000)
+    }
   }
 
+  const clearData = () => {
+    setTitle('')
+    setImageAsset(null)
+    setCalories('')
+    setPrice('')
+    setCategory('Select Category')
+  }
   return (
     <div className='w-full h-full flex items-center justify-center'>
-      <div className='w-[90%] md:w-[50%] border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center gap-4'>
+      <div className='w-[90%] md:w-[50%] lg:w-[40%] border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center gap-4'>
         {fields && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`w-full p-2 rounded-lg text-center text-lg font-semibold ${
+            className={`w-full p-1 rounded-lg text-center text-base font-semibold ${
               alertStatus === 'danger'
                 ? 'bg-red-400 text-red-800'
                 : 'bg-emerald-400 text-emerald-800'
@@ -64,7 +162,7 @@ const CreateContainer = () => {
         {/* item categories */}
         <div className='w-full'>
           <select
-            onChange={(e) => setCalories(e.target.value)}
+            onChange={(e) => setCategory(e.target.value)}
             className='bg-primary  outline-none w-full  border-b-2 border-gray-300 p-2 rounded-md cursor-pointer text-headingColor'>
             <option
               value='other'
@@ -82,7 +180,7 @@ const CreateContainer = () => {
           </select>
         </div>
         {/* item image */}
-        <div className='group flex justify-center items-center flex-col border-2 border-dotted border-gray-300 w-full h-225 md:h-340 cursor-pointer rounded-lg'>
+        <div className='group flex justify-center items-center flex-col border-2 border-dotted border-gray-300 w-full h-[12rem]  cursor-pointer rounded-lg'>
           {isLoading ? (
             <Loader />
           ) : (
@@ -107,16 +205,15 @@ const CreateContainer = () => {
                 </>
               ) : (
                 <>
-                  {' '}
                   <div className=' relative h-full '>
                     <img
                       src={imageAsset}
                       alt='uploaded image'
-                      className='w-full h-full object-cover'
+                      className='w-full h-full object-contain'
                     />
                     <button
                       type='button'
-                      className='absolute bottom-3 right-3 p-3 rounded-full text-xl cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out '
+                      className=' p-1 text-lg absolute bottom-3 right-3  rounded-full  cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out bg-red-700'
                       onClick={deleteImage}>
                       <MdDelete className='text-white' />
                     </button>
@@ -160,7 +257,7 @@ const CreateContainer = () => {
         <div className='flex items-center w-full'>
           <button
             type='button'
-            className='ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 px-10 py-1 rounded-lg text-lg text-white font-semibold'
+            className='ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 px-10 py-1 rounded-lg text-base text-white font-semibold'
             onClick={saveDetails}>
             Save
           </button>
