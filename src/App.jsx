@@ -1,12 +1,31 @@
-import Header from './components/layout/Header'
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { AnimatePresence } from 'framer-motion'
 
+import Header from './components/layout/Header'
 import MainContainer from './components/layout/MainContainer'
 import CreateContainer from './components/layout/CreateContainer'
 
+import { useStateValue } from './context/StateProvider'
+import { getAllFoodItems } from './utils/firebaseFunc'
+import { actionType } from './context/reducer'
+
 const App = () => {
+  const [{ foodItems }, dispatch] = useStateValue()
+
+  const fetchData = async () => {
+    await getAllFoodItems().then((data) => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data
+      })
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
   return (
     <AnimatePresence exitBeforeEnter>
       <div className='min-h-screen flex flex-col bg-primary'>

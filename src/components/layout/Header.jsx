@@ -9,7 +9,7 @@ import { app } from '../../firebase'
 import { MdShoppingCart, MdAdd, MdLogout } from 'react-icons/md'
 import { motion } from 'framer-motion'
 
-import logo from '../../assets/logo.png'
+import logo from '../../assets/chef1.png'
 import avatar from '../../assets/avatar.png'
 import { actionType } from '../../context/reducer'
 
@@ -51,7 +51,7 @@ const Header = () => {
       {/* desktop */}
       <div className='hidden md:flex w-full h-full items-center justify-between'>
         <Link to='/' className='flex items-center gap-2'>
-          <img src={logo} alt='logo' className='w-8 object-cover' />
+          <img src={logo} alt='logo' className='w-10 object-cover' />
           <p className='text-headingColor text-xl font-bold'>City</p>
         </Link>
         <div className='flex items-center gap-8'>

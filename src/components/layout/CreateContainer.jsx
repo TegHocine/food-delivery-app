@@ -20,6 +20,9 @@ import {
 
 import { categories } from '../../utils/data'
 import { saveItem } from '../../utils/firebaseFunc'
+import { useStateValue } from '../../context/StateProvider'
+import { getAllFoodItems } from '../../utils/firebaseFunc'
+import { actionType } from '../../context/reducer'
 
 const CreateContainer = () => {
   const [title, setTitle] = useState('')
@@ -31,6 +34,16 @@ const CreateContainer = () => {
   const [alertStatus, setAlertStatus] = useState('danger')
   const [msg, setMsg] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [{ foodItems }, dispatch] = useStateValue()
+
+  const fetchData = async () => {
+    await getAllFoodItems().then((data) => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data
+      })
+    })
+  }
 
   const uploadImage = (e) => {
     setIsLoading(true)
@@ -123,6 +136,8 @@ const CreateContainer = () => {
         setIsLoading(false)
       }, 4000)
     }
+
+    fetchData()
   }
 
   const clearData = () => {
