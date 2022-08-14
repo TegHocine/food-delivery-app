@@ -2,7 +2,7 @@ import React from 'react'
 
 const HeroCard = ({ img, title, desc, price, currency }) => {
   return (
-    <div className='bg-cardOverlay backdrop-blur-md rounded-3xl flex items-center justify-center flex-col lg:w-190  p-4 '>
+    <div className='bg-cardOverlay backdrop-blur-md rounded-3xl flex items-center justify-center flex-col  lg:w-190  p-4 '>
       <img
         src={img}
         alt='icecream Chocolate Vanilla'
