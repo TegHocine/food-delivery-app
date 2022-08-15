@@ -12,7 +12,7 @@ const RowContainer = ({ flag, data }) => {
   const rowContainer = useRef()
 
   const [scrollValue, setScrollValue] = useState(0)
-  console.log(scrollValue)
+
   const scrollLeft = () => {
     if (scrollValue < rowContainer.current.scrollLeftMax) {
       setScrollValue(scrollValue + 200)
@@ -28,7 +28,7 @@ const RowContainer = ({ flag, data }) => {
     rowContainer.current.scrollLeft = scrollValue
   }, [scrollValue])
   return (
-    <>
+    <section className='w-full my-6'>
       <div
         className={`w-full flex items-center justify-between ${
           !flag && 'hidden'
@@ -60,7 +60,8 @@ const RowContainer = ({ flag, data }) => {
           data.map((item) => (
             <RowCard
               key={item.id}
-              img={item.imageURL}
+              id={item.id}
+              imageURL={item.imageURL}
               title={item.title}
               calories={item.calories}
               price={item.price}
@@ -75,7 +76,7 @@ const RowContainer = ({ flag, data }) => {
           </div>
         )}
       </div>
-    </>
+    </section>
   )
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useStateValue } from '../../context/StateProvider'
+import { actionType } from '../../context/reducer'
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '../../firebase'
@@ -11,7 +12,6 @@ import { motion } from 'framer-motion'
 
 import logo from '../../assets/chef1.png'
 import avatar from '../../assets/avatar.png'
-import { actionType } from '../../context/reducer'
 
 const Header = () => {
   const firebaseAuth = getAuth(app)
@@ -19,7 +19,7 @@ const Header = () => {
 
   const [isMenu, setIsMenu] = useState(false)
 
-  const [{ user }, dispatch] = useStateValue()
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue()
   const login = async () => {
     if (!user) {
       const {
@@ -44,6 +44,13 @@ const Header = () => {
 
   const menu = () => {
     setIsMenu(!isMenu)
+  }
+
+  const showCart = () => {
+    dispatch({
+      type: actionType.SET_CART_SHOW,
+      cartShow: !cartShow
+    })
   }
 
   return (
@@ -73,12 +80,18 @@ const Header = () => {
               Service
             </li>
           </motion.ul>
-          {/* // Cart */}
-          <div className='relative flex items-center justify-center'>
+          {/* Cart */}
+          <div
+            className='relative flex items-center justify-center'
+            onClick={showCart}>
             <MdShoppingBasket className='text-textColor text-2xl cursor-pointer' />
-            <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
-              <p className='text-sm text-white font-semibold'>1</p>
-            </div>
+            {cartItems && cartItems.length > 0 && (
+              <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
+                <p className='text-sm text-white font-semibold'>
+                  {cartItems.length}
+                </p>
+              </div>
+            )}
           </div>
           {/* User Avatar */}
           <div className='relative' onClick={user ? menu : login}>
@@ -114,11 +127,17 @@ const Header = () => {
       {/* Mobile */}
       <div className='flex md:hidden items-center justify-between'>
         {/* Cart */}
-        <div className='relative flex items-center justify-center'>
+        <div
+          className='relative flex items-center justify-center'
+          onClick={showCart}>
           <MdShoppingBasket className='text-textColor text-2xl cursor-pointer' />
-          <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
-            <p className='text-sm text-white font-semibold'>1</p>
-          </div>
+          {cartItems && cartItems.length > 0 && (
+            <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
+              <p className='text-sm text-white font-semibold'>
+                {cartItems.length}
+              </p>
+            </div>
+          )}
         </div>
         <Link to='/' className='flex items-center gap-2'>
           <img src={logo} alt='logo' className='w-8 object-cover' />

@@ -2,21 +2,19 @@ import React from 'react'
 import { BiMinus, BiPlus } from 'react-icons/bi'
 import { motion } from 'framer-motion'
 
-import prod from '../assets/f1.png'
-
-const CartItem = () => {
+const CartItem = ({ imageURL, title, price }) => {
   return (
     <div className='w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2'>
       <img
-        src={prod}
+        src={imageURL}
         className='w-20 h-20 max-w-[60px] rounded-full object-contain'
         alt=''
       />
 
       {/* name section */}
       <div className='flex flex-col gap-2'>
-        <p className='text-base text-gray-50'>StrawBerry</p>
-        <p className='text-sm block text-gray-300 font-semibold'>$ 400</p>
+        <p className='text-base text-gray-50'> {title} </p>
+        <p className='text-sm block text-gray-300 font-semibold'>$ {price}</p>
       </div>
 
       {/* button section */}

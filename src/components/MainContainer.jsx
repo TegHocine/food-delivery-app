@@ -7,20 +7,20 @@ import Cart from './Cart'
 import { useStateValue } from '../context/StateProvider'
 
 const MainContainer = () => {
-  const [{ foodItems, dispatch }] = useStateValue()
+  const [{ foodItems, cartShow }, dispatch] = useStateValue()
 
   return (
     <div className='w-full h-auto flex flex-col items-center justify-center '>
       <HomeContainer />
 
-      <section className='w-full my-6'>
-        <RowContainer
-          flag={true}
-          data={foodItems?.filter((item) => item.category === 'fruits')}
-        />
-      </section>
+      <RowContainer
+        flag={true}
+        data={foodItems?.filter((item) => item.category === 'fruits')}
+      />
+
       <MenuContainer />
-      <Cart />
+
+      {cartShow && <Cart />}
     </div>
   )
 }
