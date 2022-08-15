@@ -76,7 +76,7 @@ const Header = () => {
           {/* // Cart */}
           <div className='relative flex items-center justify-center'>
             <MdShoppingCart className='text-textColor text-2xl cursor-pointer' />
-            <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
+            <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-red-600  flex justify-center items-center'>
               <p className='text-sm text-white font-semibold'>1</p>
             </div>
           </div>
@@ -113,10 +113,10 @@ const Header = () => {
       </div>
       {/* Mobile */}
       <div className='flex md:hidden items-center justify-between'>
-        {/* // Cart */}
+        {/* Cart */}
         <div className='relative flex items-center justify-center'>
           <MdShoppingCart className='text-textColor text-2xl cursor-pointer' />
-          <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
+          <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-red-800  flex justify-center items-center'>
             <p className='text-sm text-white font-semibold'>1</p>
           </div>
         </div>

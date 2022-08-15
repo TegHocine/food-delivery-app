@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import RowCard from '../RowCard'
-import NotFound from '../../assets/NotFound.svg'
 
 import { motion } from 'framer-motion'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
+
+import RowCard from '../RowCard'
+import Heading from '../Heading'
+
+import NotFound from '../../assets/NotFound.svg'
 
 const RowContainer = ({ flag, data }) => {
   const rowContainer = useRef()
@@ -26,10 +29,11 @@ const RowContainer = ({ flag, data }) => {
   }, [scrollValue])
   return (
     <>
-      <div className='w-full flex items-center justify-between'>
-        <p className='text-lg font-semibold capitalize text-headingColor relative before:absolute before:rounded-lg before:countent before:w-24 before:h-1 before:-bottom-2 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 transition-all ease-in-out duration-100'>
-          Our Fresh & healthy fruits
-        </p>
+      <div
+        className={`w-full flex items-center justify-between ${
+          !flag && 'hidden'
+        } `}>
+        <Heading title={'Our Fresh & healthy fruits'} />
         <div className='hidden md:flex items-center gap-3'>
           <motion.div
             whileTap={{ scale: 0.75 }}

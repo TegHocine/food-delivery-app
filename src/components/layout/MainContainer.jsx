@@ -2,6 +2,7 @@ import React from 'react'
 
 import HomeContainer from './HomeContainer'
 import RowContainer from './RowContainer'
+import MenuContainer from './MenuContainer'
 import { useStateValue } from '../../context/StateProvider'
 
 const MainContainer = () => {
@@ -17,6 +18,7 @@ const MainContainer = () => {
           data={foodItems?.filter((item) => item.category === 'fruits')}
         />
       </section>
+      <MenuContainer />
     </div>
   )
 }
