@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 
 import Header from './components/layout/Header'
-import MainContainer from './components/layout/MainContainer'
+import MainContainer from './components/MainContainer'
 import CreateContainer from './components/layout/CreateContainer'
 
 import { useStateValue } from './context/StateProvider'

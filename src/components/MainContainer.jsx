@@ -1,9 +1,10 @@
 import React from 'react'
 
-import HomeContainer from './HomeContainer'
-import RowContainer from './RowContainer'
-import MenuContainer from './MenuContainer'
-import { useStateValue } from '../../context/StateProvider'
+import HomeContainer from './layout/HomeContainer'
+import RowContainer from './layout/RowContainer'
+import MenuContainer from './layout/MenuContainer'
+import Cart from './Cart'
+import { useStateValue } from '../context/StateProvider'
 
 const MainContainer = () => {
   const [{ foodItems, dispatch }] = useStateValue()
@@ -19,6 +20,7 @@ const MainContainer = () => {
         />
       </section>
       <MenuContainer />
+      <Cart />
     </div>
   )
 }

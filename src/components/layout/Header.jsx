@@ -6,7 +6,7 @@ import { useStateValue } from '../../context/StateProvider'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '../../firebase'
 
-import { MdShoppingCart, MdAdd, MdLogout } from 'react-icons/md'
+import { MdShoppingBasket, MdAdd, MdLogout } from 'react-icons/md'
 import { motion } from 'framer-motion'
 
 import logo from '../../assets/chef1.png'
@@ -75,8 +75,8 @@ const Header = () => {
           </motion.ul>
           {/* // Cart */}
           <div className='relative flex items-center justify-center'>
-            <MdShoppingCart className='text-textColor text-2xl cursor-pointer' />
-            <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-red-600  flex justify-center items-center'>
+            <MdShoppingBasket className='text-textColor text-2xl cursor-pointer' />
+            <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
               <p className='text-sm text-white font-semibold'>1</p>
             </div>
           </div>
@@ -115,8 +115,8 @@ const Header = () => {
       <div className='flex md:hidden items-center justify-between'>
         {/* Cart */}
         <div className='relative flex items-center justify-center'>
-          <MdShoppingCart className='text-textColor text-2xl cursor-pointer' />
-          <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-red-800  flex justify-center items-center'>
+          <MdShoppingBasket className='text-textColor text-2xl cursor-pointer' />
+          <div className='w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg  flex justify-center items-center'>
             <p className='text-sm text-white font-semibold'>1</p>
           </div>
         </div>
