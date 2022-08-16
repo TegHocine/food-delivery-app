@@ -57,16 +57,7 @@ const RowContainer = ({ flag, data }) => {
             : 'overflow-x-hidden flex-wrap justify-center'
         }`}>
         {data ? (
-          data.map((item) => (
-            <RowCard
-              key={item.id}
-              id={item.id}
-              imageURL={item.imageURL}
-              title={item.title}
-              calories={item.calories}
-              price={item.price}
-            />
-          ))
+          data.map((item) => <RowCard key={item.id} item={item} />)
         ) : (
           <div className='w-full flex flex-col items-center justify-center'>
             <img src={NotFound} className='h-340' />
